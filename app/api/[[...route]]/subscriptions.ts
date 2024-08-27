@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { Hono } from "hono";
 import { eq } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
-import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
+import { clerkMiddleware, getAuth } from "@/lib/dev-auth";
 import { 
   createCheckout, 
   getSubscription

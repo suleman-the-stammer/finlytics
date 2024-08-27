@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { and, eq, isNotNull } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 import { zValidator } from "@hono/zod-validator";
-import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
+import { clerkMiddleware, getAuth } from "@/lib/dev-auth";
 import { 
   Configuration, 
   CountryCode, 

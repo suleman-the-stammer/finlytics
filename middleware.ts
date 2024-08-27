@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher([
-  "/",
-]);
-
-export default clerkMiddleware((auth, request) => {
-  if (isProtectedRoute(request)) {
-    auth().protect();
-  }
-
+/**
+ * ⚠️ LOCAL-DEV ONLY — Clerk authentication is disabled so the app runs without
+ * a Clerk account. Every route is public. To restore real auth, revert this
+ * file to the clerkMiddleware() version (see git history).
+ */
+export default function middleware() {
   return NextResponse.next();
-});
+}
 
 export const config = {
-  matcher: ["/((?!.+.[w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!_next|.*\\..*).*)"],
 };

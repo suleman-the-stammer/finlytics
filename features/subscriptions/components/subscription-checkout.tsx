@@ -1,23 +1,22 @@
-import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
-import { useCheckoutSubscription } from "@/features/subscriptions/api/use-checkout-subscription";
+"use client";
+
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 
+/**
+ * ⚠️ DEMO STUB — Lemon Squeezy billing is not configured in this portfolio
+ * build (all premium features are already unlocked via use-paywall.ts).
+ * The real checkout flow is preserved in git history.
+ */
 export const SubscriptionCheckout = () => {
-  const checkout = useCheckoutSubscription();
-  const {
-    data: subscription,
-    isLoading: isLoadingSubscription,
-  } = useGetSubscription();
+  const onClick = () => {
+    toast.info("Billing is disabled in this demo — every feature is already unlocked.");
+  };
 
   return (
-    <Button
-      onClick={() => checkout.mutate()}
-      disabled={checkout.isPending || isLoadingSubscription}
-      variant="ghost"
-      size="sm"
-    >
-      {subscription ? "Manage" : "Upgrade"}
+    <Button onClick={onClick} variant="ghost" size="sm">
+      Upgrade
     </Button>
   );
 };

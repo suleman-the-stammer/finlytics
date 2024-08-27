@@ -1,62 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { useMount } from "react-use";
-import { usePlaidLink } from "react-plaid-link";
-
-import { useCreateLinkToken } from "@/features/plaid/api/use-create-link-token";
-import { useExchangePublicToken } from "@/features/plaid/api/use-exchange-public-token";
-
-import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 
+/**
+ * ⚠️ DEMO STUB — Plaid is not configured in this portfolio build, so this no
+ * longer requests a link token on mount (which 500'd without credentials).
+ * The real Plaid Link flow is preserved in git history; restore it once
+ * PLAID_CLIENT_TOKEN / PLAID_SECRET_TOKEN are set.
+ */
 export const PlaidConnect = () => {
-  const [token, setToken] = useState<string | null>(null);
-
-  const createLinkToken = useCreateLinkToken();
-  const exchangePublicToken = useExchangePublicToken();
-  const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
-
-  useMount(() => {
-    createLinkToken.mutate(undefined, {
-      onSuccess: ({ data }) => {
-        setToken(data);
-      },
-    });
-  });
-
-  const plaid = usePlaidLink({
-    token: token,
-    onSuccess: (publicToken) => {
-      exchangePublicToken.mutate({
-        publicToken,
-      });
-    },
-    env: "sandbox",
-  });
-
   const onClick = () => {
-    if (shouldBlock) {
-      triggerPaywall();
-      return;
-    }
-
-    plaid.open();
+    toast.info("Bank connections are disabled in this portfolio demo.");
   };
 
-  const isDisabled =
-    !plaid.ready ||
-    exchangePublicToken.isPending ||
-    isLoading
-
   return (
-    <Button
-      onClick={onClick}
-      disabled={isDisabled}
-      size="sm"
-      variant="ghost"
-    >
+    <Button onClick={onClick} size="sm" variant="ghost">
       Connect
     </Button>
   );

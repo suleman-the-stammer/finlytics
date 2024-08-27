@@ -8,7 +8,10 @@ export const usePaywall = () => {
     isLoading: isLoadingSubscription,
   } = useGetSubscription();
 
-  const shouldBlock = !subscription || subscription.status === "expired";
+  // ⚠️ LOCAL-DEV: Lemon Squeezy billing is disabled, so nothing is paywalled
+  // (all chart types are unlocked). Restore the real check below for production:
+  //   const shouldBlock = !subscription || subscription.status === "expired";
+  const shouldBlock = false;
 
   return {
     isLoading: isLoadingSubscription,
