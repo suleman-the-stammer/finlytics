@@ -1,25 +1,44 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { AreaChart, BarChart3, FileSearch, LineChart, Loader2 } from "lucide-react";
 
 import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 
-import { 
-  Select, 
-  SelectTrigger, 
-  SelectContent, 
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
   SelectValue,
-  SelectItem, 
+  SelectItem,
 } from "@/components/ui/select";
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
+import {
+  Card,
+  CardContent,
+  CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { AreaVariant } from "@/components/area-variant";
-import { BarVariant } from "@/components/bar-variant";
-import { LineVariant } from "@/components/line-variant";
 import { Skeleton } from "@/components/ui/skeleton";
+
+// Recharts is heavy, so load each chart variant only when it is actually
+// rendered. This keeps recharts out of the initial JS bundle.
+const chartLoader = () => (
+  <div className="flex h-[350px] w-full items-center justify-center">
+    <Loader2 className="size-6 animate-spin text-slate-300" />
+  </div>
+);
+
+const AreaVariant = dynamic(
+  () => import("@/components/area-variant").then((m) => m.AreaVariant),
+  { ssr: false, loading: chartLoader },
+);
+const BarVariant = dynamic(
+  () => import("@/components/bar-variant").then((m) => m.BarVariant),
+  { ssr: false, loading: chartLoader },
+);
+const LineVariant = dynamic(
+  () => import("@/components/line-variant").then((m) => m.LineVariant),
+  { ssr: false, loading: chartLoader },
+);
 
 type Props = {
   data?: {

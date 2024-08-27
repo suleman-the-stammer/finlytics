@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@/lib/clerk-stub";
 
 export const WelcomeMsg = () => {
   const { user, isLoaded } = useUser();
@@ -10,7 +10,7 @@ export const WelcomeMsg = () => {
       <h2 className="text-2xl lg:text-4xl text-white font-medium">
         Welcome Back{isLoaded ? ", " : " "}{user?.firstName} 👋🏻
       </h2>
-      <p className="text-sm lg:text-base text-[#89b6fd]">
+      <p className="text-sm lg:text-base text-sky-100">
         This is your Financial Overview Report
       </p>
     </div>

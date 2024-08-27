@@ -1,25 +1,43 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { FileSearch, Loader2, PieChart, Radar, Target } from "lucide-react";
 
 import { usePaywall } from "@/features/subscriptions/hooks/use-paywall";
 
-import { 
-  Select, 
-  SelectTrigger, 
-  SelectContent, 
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
   SelectValue,
-  SelectItem, 
+  SelectItem,
 } from "@/components/ui/select";
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
+import {
+  Card,
+  CardContent,
+  CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { PieVariant } from "@/components/pie-variant";
-import { RadarVariant } from "@/components/radar-variant";
-import { RadialVariant } from "@/components/radial-variant";
 import { Skeleton } from "@/components/ui/skeleton";
+
+// Load recharts-based variants on demand to keep them out of the initial bundle.
+const chartLoader = () => (
+  <div className="flex h-[350px] w-full items-center justify-center">
+    <Loader2 className="size-6 animate-spin text-slate-300" />
+  </div>
+);
+
+const PieVariant = dynamic(
+  () => import("@/components/pie-variant").then((m) => m.PieVariant),
+  { ssr: false, loading: chartLoader },
+);
+const RadarVariant = dynamic(
+  () => import("@/components/radar-variant").then((m) => m.RadarVariant),
+  { ssr: false, loading: chartLoader },
+);
+const RadialVariant = dynamic(
+  () => import("@/components/radial-variant").then((m) => m.RadialVariant),
+  { ssr: false, loading: chartLoader },
+);
 
 type Props = {
   data?: {
